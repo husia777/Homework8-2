@@ -32,15 +32,7 @@ def get_student_by_pk(pk, students):
         if students[i]['pk'] == pk:
             return students[i]
 
-def get_skill_student_by_name(name, students):
-    """
-    :param name: Имя студента
-    :param students: Файл с информацией о студентах
-    :return: Возвращает навыки студента
-    """
-    for i  in range(len(students)):
-        if students[i]['full_name'] == name:
-            return students[i]['skills']
+
 
 def get_profession_by_title(title, professions):
     """
