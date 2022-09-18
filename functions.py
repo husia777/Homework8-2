@@ -28,7 +28,7 @@ def get_student_by_pk(pk, students):
     :param students: Студенты
     :return:Возвращает студента соответствующему данному ID
     """
-    for i  in range(len(students)):
+    for i in range(len(students)):
         if students[i]['pk'] == pk:
             return students[i]
 
@@ -60,9 +60,9 @@ def check_fitness(student, profession):
     :return: Возвращает проф пригодность в виде словаря
     """
     #Скиллы ученика
-    skill_student = get_skill_student_by_name(student, load_students())
+    skill_student = student['skills']
     #Скиллы профессии
-    skill_profession = get_profession_by_title(profession, load_professions())
+    skill_profession = profession
     student_skills = set(skill_student)
     profession_skills = set(skill_profession)
     has = profession_skills.intersection(student_skills)
@@ -74,9 +74,4 @@ def check_fitness(student, profession):
         "fit_percent": fit_persent
         }
     return available_knowledge
-
-
-
-
-
 

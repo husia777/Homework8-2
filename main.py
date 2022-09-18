@@ -6,27 +6,26 @@ def main():
         if pk_input == 'Выход':
             break
         try:
-            numb_student, name_student, skills = get_student_by_pk(int(pk_input), load_students()).values()
-            skills = ' '.join(skills)
-            print(f'Студент {name_student}\nЗнает {skills}')
-            prof_input = input(f'Выберите специальность для оценки студента {name_student} ')
+            student = get_student_by_pk(int(pk_input), load_students())
+            print(f'Студент {student["full_name"]}\nЗнает {" ".join(student["skills"])}')
+            prof_input = input(f'Выберите специальность для оценки студента {student["full_name"]} ')
             if prof_input == 'Выход':
                 break
             try:
-                get_profession_by_title(prof_input, load_professions())
-                has, lacks, fit_percent = check_fitness(name_student, prof_input).values()
-                print(f'Пригодность  {fit_percent} %')
-                if has == 'Необходимых знаний нет':
-                    print(f'{name_student}  {has}')
+                profession = get_profession_by_title(prof_input, load_professions())
+                compliance_check = check_fitness(student, profession)
+                print(f'Пригодность  {compliance_check["fit_percent"]} %')
+                if compliance_check["has"] == 'Необходимых знаний нет':
+                    print(f'{student["full_name"]}  {compliance_check["has"]}')
                 else:
-                    has = ' '.join(has)
-                    print(f'{name_student} знает {has}')
+                    has = ' '.join(compliance_check["has"])
+                    print(f'{student["full_name"]} знает {has}')
 
-                if lacks == 'Нужные знания получены':
-                    print(f'{name_student}  {lacks}')
+                if compliance_check["lacks"] == 'Нужные знания получены':
+                    print(f'{student["full_name"]}  {compliance_check["lacks"]}')
                 else:
-                    lacks = ' '.join(lacks)
-                    print(f'{name_student} не знает {lacks}')
+                    lacks = ' '.join(compliance_check["lacks"])
+                    print(f'{student["full_name"]} не знает {lacks}')
             except:
                 print('У нас нет такой специальности')
         except:
